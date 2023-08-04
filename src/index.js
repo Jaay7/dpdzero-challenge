@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser';
 import { PrismaClient } from '@prisma/client'
 import jwt from 'jsonwebtoken'
+import cors from 'cors'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -9,6 +10,7 @@ const prisma = new PrismaClient()
 const app = express()
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.post("/api/register_user", async (req, res) => {
   const { username, email, password, full_name, age, gender } = req.body
