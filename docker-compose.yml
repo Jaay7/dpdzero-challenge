@@ -1,21 +1,20 @@
 version: "3"
 
 services:
-  mysqldb:
+  db:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: railway
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: prisma
     ports:
       - 3306:3306
 
   prisma-mysql-api:
     depends_on:
-      - mysqldb
+      - db
     build: .
+    # command: bash -c "npx prisma migrate dev --name init && npm run dev"
     ports:
       - 3300:3300
     environment:
-      - DATABASE_URL=mysql://root:root@mysqldb:3306/railway
+      - DATABASE_URL=mysql://root:root@db:3306/prisma
